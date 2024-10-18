@@ -29,7 +29,7 @@ jobs:
         
     - name: Push Docker Img
       run: |
-        docker push -t michlanza/practice:1.0.0.1 .   
+        docker push michlanza/practice:1.0.0.1  
         
     
     
