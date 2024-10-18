@@ -30,18 +30,20 @@ jobs:
       env: 
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS }}
-        NEW_VERSION : ${{ steps.version.outputs.version }}
+       
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        echo "NEW VERSION : $NEW_VERSION"
-    # - name: Build Docker Img
-    #   run: |
-    #     docker build -t michlanza/practice:1.0.0.1 .
-    #     docker build -t michlanza/practice:latest .
-    # - name: Push Docker Img
-    #   run: |
-    #     docker push michlanza/practice:1.0.0.1  
-    #     docker push michlanza/practice:latest  
+ 
+    - name: Build Docker Img
+      env: 
+         NEW_VERSION : ${{ steps.version.outputs.version }}
+      run: |
+        docker build -t michlanza/practice:$NEW_VERSION .
+        docker build -t michlanza/practice:latest .
+    - name: Push Docker Img
+      run: |
+        docker push michlanza/practice:$NEW_VERSION
+        docker push michlanza/practice:latest  
     
     
    # - name: Build the Docker image
