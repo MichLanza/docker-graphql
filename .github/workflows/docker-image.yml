@@ -29,18 +29,20 @@ jobs:
     - name: Docker login
       env: 
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS }}
-       
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS }}       
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
- 
+        
     - name: Build Docker Img
       env: 
-         NEW_VERSION : ${{ steps.version.outputs.version }}
+         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker build -t michlanza/practice:$NEW_VERSION .
         docker build -t michlanza/practice:latest .
+        
     - name: Push Docker Img
+      env: 
+         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker push michlanza/practice:$NEW_VERSION
         docker push michlanza/practice:latest  
